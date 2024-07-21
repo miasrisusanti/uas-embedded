@@ -21,6 +21,7 @@ class Game:
         self.mystery_group = pygame.sprite.GroupSingle()
         self.lives = 3
         self.run = True
+        self.win = False
         self.score = 0
         self.explosion_sound = pygame.mixer.Sound("C:\\Users\\USER\\Documents\\UAS-EMBEDDED\\uas-embedded\\space-invaders\\music\\explosion.ogg")
         pygame.mixer.music.load("C:\\Users\\USER\\Documents\\UAS-EMBEDDED\\uas-embedded\\space-invaders\\music\\music.ogg")
@@ -120,10 +121,17 @@ class Game:
 
                 if pygame.sprite.spritecollide(alien, self.spaceship_group, False):
                     self.game_over()
+        
+        if not self.aliens_group:
+            self.win_game()
 
     def game_over(self):
         self.run = False
 
+    def win_game(self):
+        self.run = False
+        self.win = True
+    
     def reset(self):
         self.run = True
         self.lives = 3
@@ -135,3 +143,4 @@ class Game:
         self.create_mystery()
         self.obstacles = self.create_obstacles()
         self.score = 0
+        self.win = False

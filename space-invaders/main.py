@@ -16,6 +16,7 @@ game_over_surface = font.render("GAME OVER", False, YELLOW)
 score_text_surface = font.render("SCORE", False, YELLOW)
 team_name_surface = font.render("KYRMIST TEAM", False, YELLOW)
 class_name_surface = font.render("TMD 6A", False, YELLOW)
+you_win_surface = font.render("YOU WIN!", False, YELLOW)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH + OFFSET, SCREEN_HEIGHT + 2*OFFSET))
 pygame.display.set_caption("Space Invaders - Embedded TMD 6A")
@@ -44,7 +45,9 @@ while True:
             pygame.time.set_timer(MYSTERY, random.randint(4000, 8000))
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and game.run == False:
+        if keys[pygame.K_SPACE] and game.run == False and game.win == False:
+            game.reset()
+        elif keys[pygame.K_RETURN] and game.run == False and game.win:
             game.reset()
 
     #update
@@ -64,6 +67,8 @@ while True:
     
     if game.run:
         screen.blit(level_surface, (520, 740, 50, 50))
+    elif game.win:
+        screen.blit(you_win_surface, (570, 740, 50, 50))
     else:
         screen.blit(game_over_surface, (570, 740, 50, 50))
     
